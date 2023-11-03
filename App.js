@@ -1,12 +1,19 @@
-import { View, Text, Image, ScrollView,Button, Pressable } from "react-native";
+import { useState } from "react";
+import { View, Text, Image, ScrollView,Button, Pressable, Modal, StatusBar, Alert } from "react-native";
 
 const logoImg = require("./assets/adaptive-icon.png");
 
 export default function App() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [isModelVisible, setIsModelVisible] = useState(false);
   return (
     <View style={{ flex: 1, backgroundColor: "black", padding: 60 }}>
+      <StatusBar backgroundColor="green" hidden={isVisible}/>
       <ScrollView>
+        <Button title="toggleVisibility" onPress={()=>setIsVisible(!isVisible)}/>
+        <Button title="alert" onPress={()=>Alert.alert("hello")}/>
       <Image source={logoImg} style={{ width: 300, height: 300 }} />
+      <Button title="show model" onPress={()=> setIsModelVisible(true)}/>
       <Text style={{ color: "white" }}>
         k chha ipsum dolor sit amet consectetur adipisicing elit. Porro
         aspernatur ex quam iste harum hic tempore? Neque accusantium in deleniti
@@ -38,6 +45,12 @@ export default function App() {
       <Image source={logoImg} style={{ width: 300, height: 300 }} />
     </Pressable>
       <Button title="Press" onPress={()=> console.log("Button Pressed")} color="midnightblue"/>
+      <Modal visible={isModelVisible} onRequestClose={()=>{setIsModelVisible(false)}} animationType="slide" presentationStyle="formSheet">
+        <View style={{flex:1, backgroundColor: "lightblue",padding: 60}}>
+          <Text> Model Content</Text>
+          <Button title="Close Model" onPress={()=> setIsModelVisible(false)}/>
+        </View>
+      </Modal>
       </ScrollView>
     </View>
   );
